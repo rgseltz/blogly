@@ -51,3 +51,16 @@ def edit_user(user_id):
     # image_url = user.image_url
     print(f'$$%%%%%%{user}#$#%$$^$%%$^')
     return render_template('edit-user.html', user=user)
+
+
+@app.route('/edit-user/<int:user_id>', methods=['POST'])
+def update_user(user_id):
+    user = User.query.get_or_404(user_id)
+    user.first_name = request.form["first_name"]
+    user.last_name = request.form["last_name"]
+    user.image_url = request.form["image_url"]
+
+    db.session.add(user)
+    db.session.commit()
+
+    return redirect('/')
