@@ -41,3 +41,13 @@ def create_user():
 def show_user(user_id):
     user = User.query.get(user_id)
     return render_template('user.html', user=user)
+
+
+@app.route('/edit-user/<int:user_id>')
+def edit_user(user_id):
+    user = User.query.get(user_id)
+    # first = user.first_name
+    # last = user.last_name
+    # image_url = user.image_url
+    print(f'$$%%%%%%{user}#$#%$$^$%%$^')
+    return render_template('edit-user.html', user=user)

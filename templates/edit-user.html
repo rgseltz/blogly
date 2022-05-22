@@ -1,11 +1,11 @@
-{% extends'base.html' %}
-{% title block%}Edit User{% endblock %}
+{% extends 'base.html' %}
+{% block title %}Edit User{% endblock %}
 
-{% content block %}
+{% block content %}
 <form action="/" method="POST">
-    <input type="text" name ="first_name" placeholder="First Name">
-    <input type="text" name="last_name" placeholder="Last Name">
-    <input type="text" name="image_url" placeholder="Enter your image URL">
+    <input type="text" name ="first_name" placeholder="{{user.first_name}}">
+    <input type="text" name="last_name" placeholder="{{user.last_name}}">
+    <input type="text" name="image_url" placeholder="{{user.image_url}}">
     <button>Submit</button>
 </form>
 
