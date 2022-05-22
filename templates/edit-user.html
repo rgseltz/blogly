@@ -1,0 +1,12 @@
+{% extends'base.html' %}
+{% title block%}Edit User{% endblock %}
+
+{% content block %}
+<form action="/" method="POST">
+    <input type="text" name ="first_name" placeholder="First Name">
+    <input type="text" name="last_name" placeholder="Last Name">
+    <input type="text" name="image_url" placeholder="Enter your image URL">
+    <button>Submit</button>
+</form>
+
+{% endblock %}
