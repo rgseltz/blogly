@@ -5,7 +5,10 @@
 <div id="user-info">
 <h1>{{user.first_name}} {{user.last_name}}</h1>
 <img class="img" src="{{user.image_url}}" alt="">
-<a href="">Delete</a>
+
+<form action="/user/{{user.id}}/delete" method="POST">
+    <button>Delete</button>
+</form>
 <a href="/edit-user/{{user.id}}">Edit</a>
 </div>
 <a href="/">Back</a>
