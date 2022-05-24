@@ -2,7 +2,7 @@
 
 from flask import Flask, render_template, request, redirect, session, flash
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'monkeyboy25'
@@ -17,7 +17,7 @@ connect_db(app)
 
 @app.route('/')
 def show_user_list():
-    users = User.query.all()
+    users = User.query.order_by(User.first_name, User.last_name).all()
     return render_template('list.html', users=users)
 
 
@@ -72,3 +72,23 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     return redirect('/')
+
+
+@app.route('/user/<int:user_id>/posts/new')
+def get_post_form(user_id):
+    user = User.query.get(user_id)
+    return render_template('posts.html', user=user)
+
+
+@app.route('/user/<int:user_id>/posts/new', methods=["POST"])
+def upload_new_post(user_id):
+    user = User.query.get(user_id)
+    title = request.form['title']
+    content = request.form['content']
+    post = Post(title=title, content=content, user_id=int(user_id))
+    print(f'$%#$$%^$#^#$^{post}##%#$%@%^$^')
+    print(f'#$#$$$%$^$%%${title}AND {content}%%%%%^^$#%$$$##$$%')
+    db.session.add(post)
+    db.session.commit()
+    user_posts = Post.query.filter(Post.user_id == user_id).all()
+    return render_template('user.html', posts=user_posts, user=user)

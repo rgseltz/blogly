@@ -12,4 +12,18 @@
 <a href="/edit-user/{{user.id}}">Edit</a>
 </div>
 <a href="/">Back</a>
+<form action="/user/{{user.id}}/posts/new" method="GET">
+    <button>New Post</button>
+</form>
+<div>
+    <h2>POSTS</h2>
+    
+    <ul>
+        {% for post in posts %}
+        <li>{{post.title}}</li>
+        {% endfor %}
+    </ul>
+   
+
+</div>
 {% endblock %}
