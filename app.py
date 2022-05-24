@@ -40,7 +40,8 @@ def create_user():
 @app.route('/user/<int:user_id>')
 def show_user(user_id):
     user = User.query.get(user_id)
-    return render_template('user.html', user=user)
+    posts = user.posts
+    return render_template('user.html', user=user, posts=posts)
 
 
 @app.route('/edit-user/<int:user_id>')
@@ -92,3 +93,39 @@ def upload_new_post(user_id):
     db.session.commit()
     user_posts = Post.query.filter(Post.user_id == user_id).all()
     return render_template('user.html', posts=user_posts, user=user)
+
+
+@app.route('/user/<int:user_id>/post/<int:post_id>')
+def show_post_detail(user_id, post_id):
+    user = User.query.get(user_id)
+    post = Post.query.get(post_id)
+    return render_template('post-detail.html', user=user, post=post)
+
+
+@app.route('/user/<int:user_id>/post/<int:post_id>/delete', methods=["POST"])
+def delete_post(user_id, post_id):
+    post = Post.query.get_or_404(post_id)
+    print(f'$$%%%%%%%%%%{post}$$$$$%%%%%%%^^%')
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(f'/user/{user_id}')
+
+
+@app.route('/user/<int:user_id>/post/<int:post_id>/edit')
+def get_edit_post_form(user_id, post_id):
+    user = User.query.get_or_404(user_id)
+    post = Post.query.get_or_404(post_id)
+    return render_template('edit-post.html', post=post, user=user)
+
+
+@app.route('/user/<int:user_id>/post/<int:post_id>/edit', methods=["POST"])
+def update_post_form(user_id, post_id):
+    user = User.query.get(user_id)
+    post = Post.query.get(post_id)
+
+    post.title = request.form["title"]
+    post.content = request.form["content"]
+
+    db.session.add(post)
+    db.session.commit()
+    return redirect(f'/user/{user.id}')

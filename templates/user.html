@@ -20,7 +20,7 @@
     
     <ul>
         {% for post in posts %}
-        <li>{{post.title}}</li>
+        <li><a href="/user/{{user.id}}/post/{{post.id}}">{{post.title}}</a></li>
         {% endfor %}
     </ul>
    
