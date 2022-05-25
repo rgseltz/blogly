@@ -1,4 +1,4 @@
-from models import User, db, Post
+from models import User, db, Post, Tag, PostTag
 from app import app
 
 db.drop_all()
@@ -36,5 +36,23 @@ db.session.add(p1)
 db.session.add(p2)
 db.session.add(p3)
 db.session.add(p4)
+
+db.session.commit()
+
+t1 = Tag(name="YOLO")
+t2 = Tag(name="TGIF")
+t3 = Tag(name="LOL")
+t4 = Tag(name="MIND-BLOWN")
+
+db.session.add_all([t1, t2, t3, t4])
+db.session.commit()
+
+p1.tags.append(t1)
+# p1.tags.append(t2)
+# p1.tags.append(t3)
+p2.tags.append(t1)
+p3.tags.append(t2)
+# p3.tags.append(t4)
+p4.tags.append(t1)
 
 db.session.commit()

@@ -9,7 +9,15 @@
     <input type="text" name="title">
     <label for="content">Content</label>
     <input type="text" name="content">
+    <div>
+    <h3>Tags</h3>
+    {% for tag in tags %}
+    <input type="checkbox" name="tags" value={{tag.id}}">
+    <label for="tag_{{tag.id}}">{{tag.name}}</label><br>
+    {% endfor %}
+    </div>
     <button>Upload!</button>
+    <button formaction="/user/{{user.id}}">Back</button>
 </form>
 
 {% endblock %}

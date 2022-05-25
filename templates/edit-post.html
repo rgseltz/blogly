@@ -9,8 +9,14 @@
 
 <label for="content" name="content">Post Content</label>
 <input type="text" name="content" placeholder="{{post.content}}" value="{{post.content}}">
-
-<button formaction="/user/{{user.id}}">Cancel</button>
+<div>
+    <h3>Tags</h3>
+    {% for tag in tags %}
+    <input type="checkbox" name="tags" value="">
+    <label for="tag_{{tag.id}}">{{tag.name}}</label><br>
+    {% endfor %}
+    </div>
+<button formaction="/user/{{post.user_id}}">Cancel</button>
 <button formmethod="POST">Update</button>
 </form>
 {% endblock %}

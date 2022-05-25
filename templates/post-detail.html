@@ -3,10 +3,19 @@
 {% block content %}
 <h1>{{post.title}}</h1>
 <p>{{post.content}}</p>
-<p>By <i>{{user.first_name}} {{user.last_name}}</i></p>
+<h3>Tags</h3> <span>
+    {% if post.tags %}
+<p>
+  <b>Tags:</b>
+  {% for tag in post.tags %}
+  <a href="/tag/{{ tag.id }}/edit"><i class="badge badge-primary">{{ tag.name }}</i></a>
+  {% endfor %}
+</p>
+{% endif %}
+</span>
 <form action="">
-    <button formaction="/user/{{user.id}}">Back</button>
-    <button formaction="/user/{{user.id}}/post/{{post.id}}/edit">Edit</button>
-    <button formaction="/user/{{user.id}}/post/{{post.id}}/delete" formmethod="POST">Delete</button>
+    <button formaction="/user/{{post.user_id}}">Back</button>
+    <button formaction="/post/{{post.id}}/edit">Edit</button>
+    <button formaction="/post/{{post.id}}/delete" formmethod="POST">Delete</button>
 </form>
 {% endblock %}
