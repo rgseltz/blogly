@@ -88,9 +88,10 @@ def upload_new_post(user_id):
     user = User.query.get(user_id)
     title = request.form['title']
     content = request.form['content']
-    post = Post(title=title, content=content, user_id=int(user_id))
-    print(f'$%#$$%^$#^#$^{post}##%#$%@%^$^')
-    print(f'#$#$$$%$^$%%${title}AND {content}%%%%%^^$#%$$$##$$%')
+    tag_ids = [int(num) for num in request.form.getlist("tags")]
+    tags = Tag.query.filter(Tag.id.in_(tag_ids)).all()
+    post = Post(title=title, content=content, user=user, tags=tags)
+
     db.session.add(post)
     db.session.commit()
     user_posts = Post.query.filter(Post.user_id == user_id).all()
